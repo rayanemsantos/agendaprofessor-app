@@ -6,6 +6,9 @@ export function setUserData(user) {
 export function setToken(token) {
     return AsyncStorage.setItem("userToken", JSON.stringify(token));
 }
+export function getToken() {
+    return AsyncStorage.getItem("userToken");
+}
 export function getUserData() {
     return AsyncStorage.getItem("userData");
 }

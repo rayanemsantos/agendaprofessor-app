@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     h1: {
         fontFamily: fontBold,
         fontSize: 24,
-        marginTop: '20%',
         marginBottom: 16,
         color: primary
     },
@@ -22,6 +21,6 @@ export const Title = ({ text, ...props }) => (
     <Text style={styles.h1} {...props}>{text}</Text>
 );
 
-export const Subtitle = ({ text, ...props }) => (
-    <Text style={styles.subtitle} {...props}>{text}</Text>
+export const Subtitle = ({ text, style={}, ...props }) => (
+    <Text style={[styles.subtitle, style]} {...props}>{text}</Text>
 );

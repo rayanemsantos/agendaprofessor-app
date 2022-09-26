@@ -1,14 +1,29 @@
 import axios from 'axios';
-import * as config from './config';
+import { getToken } from '../storage/Storage';
+import { URL_BASE } from './config';
 
-export function auth(params){
+axios.interceptors.request.use(
+  async config => {
+    const token = await getToken();
+    config.headers['Content-Type'] = 'application/json';
+    if(token){
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+export function login(params){
   var params = {
-    registration_id: params.registration_id,
+    username: params.username,
     password: params.password
   }
-  return axios.post(`${config.URL_BASE}/user/login`, params)
+  return axios.post(`${URL_BASE}/auth/login`, params)
 }
 
-export function logout(params){
-  return axios.post(`${config.URL_BASE}/user/logout`, params)
+export function logout(){
+  return axios.post(`${URL_BASE}/auth/logout`)
 }

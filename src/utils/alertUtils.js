@@ -9,18 +9,28 @@ import {
 const width = Dimensions.get('screen').width
 const scale = width / 3
 
-export const alertConfirm = (title, subtitle, callbackConfirm) => {
+export const alert = (props) => {
+    const { title, subtitle, 
+            textCancel = 'Cancelar', 
+            textConfirm = 'Confirmar', 
+            callbackConfirm } = props;
+
+    let arrayActions =  [
+        {
+            text: textCancel,
+            style: 'cancel',
+        },
+    ]
+
+    callbackConfirm && arrayActions.push({ 
+        text: textConfirm, 
+        onPress: () => callbackConfirm()
+    });
+
     Alert.alert(
         title,
         subtitle,
-        [
-            {
-                text: 'Cancelar',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-            },
-            { text: "Exluir", onPress: () => callbackConfirm() },
-        ],
+        arrayActions,
         { cancelable: true }
     );
 };
