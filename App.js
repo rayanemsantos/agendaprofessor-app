@@ -1,18 +1,16 @@
-import React, { useMemo, useEffect, useReducer } from "react";
+import 'react-native-gesture-handler';
+import React, { useEffect, useReducer } from "react";
 import {
   SafeAreaView,
   StyleSheet,
-  View
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useFonts, load } from 'expo-font';
-import { AsyncStorage } from 'react-native';
-import * as SplashScreen from 'expo-splash-screen';
+import { useFonts } from 'expo-font';
 import LoginPage from './src/pages/login/LoginPage';
-import HomePage from './src/pages/home/HomePage';
-import { AuthContextProvider, useAuthContext } from "./src/contexts/AuthContext";
-import { cleanData, getToken, setToken } from "./src/storage/Storage";
+import { AuthContextProvider } from "./src/contexts/AuthContext";
+import { cleanData, getToken } from "./src/storage/Storage";
+import MenuDrawer from './src/components/menu-drawer/MenuDrawer';
 
 const bold = require('./src/assets/fonts/Montserrat-Bold.ttf');
 const medium = require('./src/assets/fonts/Montserrat-Medium.ttf');
@@ -95,9 +93,13 @@ function App() {
           >
             {
               state.userToken == null ? (
-                <Stack.Screen options={{headerShown: false, animationEnabled: true}} name="LoginPage" component={LoginPage} />
+                <Stack.Screen options={{headerShown: false, animationEnabled: true}} 
+                              name="LoginPage" 
+                              component={LoginPage} />
               ) : (
-                <Stack.Screen options={{headerShown: false, animationEnabled: true}} name="HomePage" component={HomePage} />
+                <Stack.Screen options={{headerShown: false, animationEnabled: true}} 
+                              name="HomePage" 
+                              component={MenuDrawer} />
               )
             }
           </Stack.Navigator>
