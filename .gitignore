@@ -1,4 +1,6 @@
 node_modules/
+_cacache/
+_logs/
 .expo/
 dist/
 npm-debug.*
