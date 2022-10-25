@@ -1,6 +1,7 @@
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList} from '@react-navigation/drawer';
 import { useAuthContext } from '../../contexts/AuthContext';
 import HomePage from '../../pages/home/HomePage';
+import FrequenciaPage from '../../pages/frequencia/FrequenciaPage'
 
 const Drawer = createDrawerNavigator();
 
@@ -27,6 +28,7 @@ export default function MenuDrawer() {
             )
         }}>
         <Drawer.Screen name="Início" component={HomePage} />
+        <Drawer.Screen name="Frequencia" component={FrequenciaPage} />
       </Drawer.Navigator>
     );
 }
