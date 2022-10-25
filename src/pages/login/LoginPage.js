@@ -13,7 +13,7 @@ import {
     Image
   } from 'react-native';
 
-  import Container from "../../components/container";
+import Container from "../../components/container";
 import { CustomButtonContained } from "../../components/customButton";
 import { AppInput } from "../../components/customInput";
 import Loading from '../../components/loading';
@@ -38,6 +38,10 @@ export default function LoginPage(props) {
         setLoading(true);
         login(form).then((response) => {
             let token_access = response.data['access'];
+            let id = response.data.data['id'];
+            console.log(token_access)
+            console.log(id)
+
             setToken(token_access);
 
             let data =  {...response.data.data};
