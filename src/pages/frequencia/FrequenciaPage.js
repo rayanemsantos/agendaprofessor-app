@@ -9,8 +9,8 @@ import { CustomButtonContained } from "../../components/customButton";
 
 import { getToken, getUserData } from "../../storage/Storage"
 
-export default function FrequenciaPage() {
-    const [schoolClassSubjectList, setSchoolClassSubjectList ] = useState([]);
+export default function FrequenciaPage(props) {
+    const [schoolClassSubjectList, setSchoolClassSubjectList] = useState([]);
     const [schoolClassSubjectSelected, setSchoolClassSubjectSelected] = useState('');
     const [schoolClassSubject, setSchoolClassSubject] = useState('');
 
@@ -18,7 +18,7 @@ export default function FrequenciaPage() {
         const getClasses = async () => {
             const userToken = await getToken()
             const userData = await getUserData()
-            // console.log(`Bearer ${JSON.parse(userToken)}`)
+            console.log(`Bearer ${JSON.parse(userToken)}`)
 
             const response = await fetch("https://agenda-professor-api.herokuapp.com/api/school_class_subject", {
                 method: 'GET',
@@ -29,22 +29,22 @@ export default function FrequenciaPage() {
                 return response.json()
             })
 
-            const {id: teacherId} = JSON.parse(userData)
+            const { id: teacherId } = JSON.parse(userData)
 
             const filtered = response.filter((item) => item.teacher == teacherId)
             setSchoolClassSubject(filtered)
-            
-            const listSelect = filtered.map(item => ({ key: item.id, value: item.school_class.label }))
-            
+
+            const listSelect = filtered.map(item => ({ key: item.id, value: item.school_class.serie + " " + item.school_class.identification + " | " + item.subject + " | " + item.school_class.shift }))
+
             setSchoolClassSubjectList(listSelect)
-            
+
         }
 
         getClasses()
     }, [])
 
     const showStudents = () => {
-        // vai exibir os estudantes de school class subject
+        // vai exibir os estudantes de school class subject 
         // const [ students_subject ] = schoolClassSubjectList[schoolClassSubject]
         const obj = schoolClassSubject.filter(item => item.id == schoolClassSubjectSelected)
 
@@ -62,12 +62,18 @@ export default function FrequenciaPage() {
                         <Container>
                             <View style={styles.formTitleContainer}>
                                 <Subtitle style={styles.formTitleConta} text='Turma' />
-                                <SelectList setSelected={setSchoolClassSubjectSelected} data={schoolClassSubjectList} onSelect={() => showStudents()} />
-                                {/* <CustomButtonContained
-                                text=''
-                                onPress={doLogin}
-                                // disabled={form.username === '' || form.password === ''}
-                            /> */}
+                                <SelectList setSelected={setSchoolClassSubjectSelected} data={schoolClassSubjectList}  />
+
+                            </View>
+                            <View style={styles.formContainer}>
+                                <CustomButtonContained
+                                    text='Avançar'
+                                    // onPress={showStudents}
+                                    onPress={() => props.navigation.navigate('Lançar Frequencia', {
+                                        id: 200
+                                    })}
+                                    disabled={schoolClassSubjectSelected === ''}
+                                />
                             </View>
                         </Container>
                     </TouchableWithoutFeedback>
@@ -78,10 +84,9 @@ export default function FrequenciaPage() {
 }
 const styles = StyleSheet.create({
     formTitleContainer: {
-        marginTop: 10
+        marginTop: 40
     },
-    formTitleConta: {
-        marginTop: 20,
-        marginBottom: 2,
-    }
+    formContainer: {
+        marginTop: 20
+    },
 });
