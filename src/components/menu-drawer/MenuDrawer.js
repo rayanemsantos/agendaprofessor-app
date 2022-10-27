@@ -29,6 +29,7 @@ export default function MenuDrawer() {
         }}>
         <Drawer.Screen name="Início" component={HomePage} />
         <Drawer.Screen name="Frequencia" component={FrequenciaPage} />
+        {/* <Drawer.Screen name="SchoolClass" component={SchoolClassPage} /> */}
       </Drawer.Navigator>
     );
 }

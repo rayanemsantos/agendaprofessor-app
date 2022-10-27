@@ -20,6 +20,7 @@ import Loading from '../../components/loading';
 import { LogoText } from "../../components/logoText";
 import { Subtitle, Title } from "../../components/text";
 import { useAuthContext } from '../../contexts/AuthContext';
+import { api } from '../../providers/api';
 
 import { login } from '../../providers/AuthProvider';
 import { setToken, setUserData } from '../../storage/Storage';
@@ -37,19 +38,16 @@ export default function LoginPage(props) {
     function doLogin() {
         setLoading(true);
         login(form).then((response) => {
-            let token_access = response.data['access'];
-            let id = response.data.data['id'];
-            console.log(token_access)
-            console.log(id)
-
+            console.log(response)
+            let token_access = response['access'];
+            let data =  {...response.data};
+            
             setToken(token_access);
-
-            let data =  {...response.data.data};
             setUserData(data).then((res) => {
                 signIn(token_access);
-                alert({ 
-                    title: "Logado com sucesso!"
-                });                
+                // alert({ 
+                //     title: "Logado com sucesso!"
+                // });                
             })
         }).catch((err) => {
             alert({ 
