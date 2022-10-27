@@ -7,10 +7,12 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
-import LoginPage from './src/pages/login/LoginPage';
 import { AuthContextProvider } from "./src/contexts/AuthContext";
 import { cleanData, getToken } from "./src/storage/Storage";
 import MenuDrawer from './src/components/menu-drawer/MenuDrawer';
+import LoginPage from './src/pages/login/LoginPage';
+import FrequenciaPage from './src/pages/frequencia/FrequenciaPage';
+import FrequenciaUpdatePage from './src/pages/frequencia/FrequenciaUpdatePage';
 
 const bold = require('./src/assets/fonts/Montserrat-Bold.ttf');
 const medium = require('./src/assets/fonts/Montserrat-Medium.ttf');
@@ -90,7 +92,9 @@ function App() {
             screenOptions={{
               headerBackTitleVisible: false,
             }}
+            
           >
+
             {
               state.userToken == null ? (
                 <Stack.Screen options={{headerShown: false, animationEnabled: true}} 
@@ -100,8 +104,9 @@ function App() {
                 <Stack.Screen options={{headerShown: false, animationEnabled: true}} 
                               name="HomePage" 
                               component={MenuDrawer} />
-              )
+              ) 
             }
+            <Stack.Screen name="Lançar Frequencia" component={FrequenciaUpdatePage} />
           </Stack.Navigator>
         </AuthContextProvider>
       </NavigationContainer>
