@@ -1,10 +1,10 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function setUserData(user) {
     return AsyncStorage.setItem("userData", JSON.stringify(user));
 }
 export function setToken(token) {
-    return AsyncStorage.setItem("userToken", JSON.stringify(token));
+    return AsyncStorage.setItem("userToken", token);
 }
 export function getToken() {
     return AsyncStorage.getItem("userToken");

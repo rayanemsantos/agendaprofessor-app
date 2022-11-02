@@ -15,6 +15,16 @@ const styles = StyleSheet.create({
         textAlignVertical:'center',
         height: 55,
     },
+    formInputMultiline: {
+        ...shadow,
+        fontFamily: fontBold,
+        backgroundColor: '#F8F8F8',
+        color: '#000',
+        paddingLeft: 16,
+        borderRadius: 8,
+        marginBottom: 16,
+        height: 120,
+    },
     formInputLabel: {
         fontFamily: fontBold,
         color:'#343434', 
@@ -83,8 +93,8 @@ export const SearchInput = ({ ...props }) => (
 
 export const AppInputMultiline = ({ ...props }) => (
     <View style={{ flex: 1}}>
-        {props.label !== '' && <Text style={{color:'#343434', paddingBottom: 10}}>{props.label}</Text>}
-        <TextInput style={[styles.formInput, {height: props.multiline ? 120 : 55}, {paddingTop: props.multiline ? 16 : 0}, ]} {...props} />
+        {props.label && <Text style={styles.formInputLabel}>{props.label}</Text>}
+        <TextInput style={[styles.formInputMultiline]} {...props} />
     </View>
 );
 

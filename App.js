@@ -10,8 +10,8 @@ import { useFonts } from 'expo-font';
 import { AuthContextProvider } from "./src/contexts/AuthContext";
 import { cleanData, getToken } from "./src/storage/Storage";
 import MenuDrawer from './src/components/menu-drawer/MenuDrawer';
+import ClassesFormPage from './src/pages/classes/ClassesForm';
 import LoginPage from './src/pages/login/LoginPage';
-import FrequenciaPage from './src/pages/frequencia/FrequenciaPage';
 import FrequenciaUpdatePage from './src/pages/frequencia/FrequenciaUpdatePage';
 
 const bold = require('./src/assets/fonts/Montserrat-Bold.ttf');
@@ -64,15 +64,15 @@ function App() {
     bootstrapAsync();
   }, []);
 
-  useEffect(() => {
-    const checkUserToken = () => {
-      if(state.userToken == null){
-        cleanData();
-      }
-    };
+  // useEffect(() => {
+  //   const checkUserToken = () => {
+  //     if(state.userToken == null){
+  //       cleanData();
+  //     }
+  //   };
 
-    checkUserToken();
-  }, [state.userToken]);
+  //   checkUserToken();
+  // }, [state.userToken]);
 
   const [fontsLoaded] = useFonts({
     'MontserratBold': bold,
@@ -91,6 +91,7 @@ function App() {
           <Stack.Navigator
             screenOptions={{
               headerBackTitleVisible: false,
+              
             }}
             
           >
@@ -101,10 +102,16 @@ function App() {
                               name="LoginPage" 
                               component={LoginPage} />
               ) : (
+                <>
                 <Stack.Screen options={{headerShown: false, animationEnabled: true}} 
                               name="HomePage" 
                               component={MenuDrawer} />
-              ) 
+                <Stack.Screen options={{animationEnabled: true, headerTitle: ''}} 
+                              name="ClassesFormPage" 
+                              component={ClassesFormPage}
+                              />                              
+                </>                              
+              )
             }
             <Stack.Screen name="Lançar Frequencia" component={FrequenciaUpdatePage} />
           </Stack.Navigator>

@@ -1,13 +1,9 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Container from "../../components/container";
-import { Subtitle, Title } from "../../components/text";
+import { Subtitle } from "../../components/text";
 import SelectList from 'react-native-dropdown-select-list'
-import { StyleSheet, View, Dimensions, ScrollView, Text, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
-import { URL_BASE } from '../../providers/config';
-import { CustomButtonContained } from "../../components/customButton";
-
-import { getToken, getUserData } from "../../storage/Storage"
+import { StyleSheet, View, ScrollView, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { fetchSchoolClassSubjects } from '../../providers/SchoolClassProvider';
 
 export default function FrequenciaPage(props) {
     const [schoolClassSubjectList, setSchoolClassSubjectList] = useState([]);
@@ -16,32 +12,18 @@ export default function FrequenciaPage(props) {
 
     useEffect(() => {
         const getClasses = async () => {
-            const userToken = await getToken()
-            const userData = await getUserData()
-            console.log(`Bearer ${JSON.parse(userToken)}`)
-
-            const response = await fetch("https://agenda-professor-api.herokuapp.com/api/school_class_subject", {
-                method: 'GET',
-                headers: new Headers({
-                    'Authorization': `Bearer ${JSON.parse(userToken)}`
-                })
-            }).then(function (response) {
-                return response.json()
-            })
-
-            const { id: teacherId } = JSON.parse(userData)
-
-            const filtered = response.filter((item) => item.teacher == teacherId)
-            setSchoolClassSubject(filtered)
-
-            const listSelect = filtered.map(item => ({ key: item.id, value: item.school_class.serie + " " + item.school_class.identification + " | " + item.subject + " | " + item.school_class.shift }))
-
-            setSchoolClassSubjectList(listSelect)
-
+            try {
+                const response  = await fetchSchoolClassSubjects();
+                setSchoolClassSubject(response);
+                let listSelect = response.map(item => ({ key: item.id, value: item.school_class.label }))
+                setSchoolClassSubjectList(listSelect);                
+            } catch (error) {
+                console.log('err', error)
+            }
         }
 
-        getClasses()
-    }, [])
+        getClasses();
+    }, []);
 
     const showStudents = () => {
         // vai exibir os estudantes de school class subject 
