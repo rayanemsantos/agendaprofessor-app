@@ -5,8 +5,8 @@ import SelectList from 'react-native-dropdown-select-list'
 import { StyleSheet, View, ScrollView, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { fetchSchoolClassSubjects } from '../../providers/SchoolClassProvider';
 
-export default function FrequenciaPage() {
-    const [schoolClassSubjectList, setSchoolClassSubjectList ] = useState([]);
+export default function FrequenciaPage(props) {
+    const [schoolClassSubjectList, setSchoolClassSubjectList] = useState([]);
     const [schoolClassSubjectSelected, setSchoolClassSubjectSelected] = useState('');
     const [schoolClassSubject, setSchoolClassSubject] = useState('');
 
@@ -26,7 +26,7 @@ export default function FrequenciaPage() {
     }, []);
 
     const showStudents = () => {
-        // vai exibir os estudantes de school class subject
+        // vai exibir os estudantes de school class subject 
         // const [ students_subject ] = schoolClassSubjectList[schoolClassSubject]
         const obj = schoolClassSubject.filter(item => item.id == schoolClassSubjectSelected)
 
@@ -44,7 +44,18 @@ export default function FrequenciaPage() {
                         <Container>
                             <View style={styles.formTitleContainer}>
                                 <Subtitle style={styles.formTitleConta} text='Turma' />
-                                <SelectList setSelected={setSchoolClassSubjectSelected} data={schoolClassSubjectList} onSelect={() => showStudents()} />
+                                <SelectList setSelected={setSchoolClassSubjectSelected} data={schoolClassSubjectList}  />
+
+                            </View>
+                            <View style={styles.formContainer}>
+                                <CustomButtonContained
+                                    text='Avançar'
+                                    // onPress={showStudents}
+                                    onPress={() => props.navigation.navigate('Lançar Frequencia', {
+                                        id: 200
+                                    })}
+                                    disabled={schoolClassSubjectSelected === ''}
+                                />
                             </View>
                         </Container>
                     </TouchableWithoutFeedback>
@@ -55,10 +66,9 @@ export default function FrequenciaPage() {
 }
 const styles = StyleSheet.create({
     formTitleContainer: {
-        marginTop: 10
+        marginTop: 40
     },
-    formTitleConta: {
-        marginTop: 20,
-        marginBottom: 2,
-    }
+    formContainer: {
+        marginTop: 20
+    },
 });

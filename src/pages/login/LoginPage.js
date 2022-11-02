@@ -27,8 +27,8 @@ import { alert } from '../../utils/alertUtils';
 
 export default function LoginPage(props) {
     const [form, setForm] = useState({
-        username: '',
-        password:  ''
+        username: '2024708',   //REMOVER DEPOIS
+        password:  '1234'      //REMOVER DEPOIS
     });
     const [loading, setLoading] = useState(false);
     const { signIn } = useAuthContext();
