@@ -11,6 +11,7 @@ import LoginPage from './src/pages/login/LoginPage';
 import { AuthContextProvider } from "./src/contexts/AuthContext";
 import { cleanData, getToken } from "./src/storage/Storage";
 import MenuDrawer from './src/components/menu-drawer/MenuDrawer';
+import ClassesFormPage from './src/pages/classes/ClassesForm';
 
 const bold = require('./src/assets/fonts/Montserrat-Bold.ttf');
 const medium = require('./src/assets/fonts/Montserrat-Medium.ttf');
@@ -62,15 +63,15 @@ function App() {
     bootstrapAsync();
   }, []);
 
-  useEffect(() => {
-    const checkUserToken = () => {
-      if(state.userToken == null){
-        cleanData();
-      }
-    };
+  // useEffect(() => {
+  //   const checkUserToken = () => {
+  //     if(state.userToken == null){
+  //       cleanData();
+  //     }
+  //   };
 
-    checkUserToken();
-  }, [state.userToken]);
+  //   checkUserToken();
+  // }, [state.userToken]);
 
   const [fontsLoaded] = useFonts({
     'MontserratBold': bold,
@@ -89,6 +90,7 @@ function App() {
           <Stack.Navigator
             screenOptions={{
               headerBackTitleVisible: false,
+              
             }}
           >
             {
@@ -97,9 +99,15 @@ function App() {
                               name="LoginPage" 
                               component={LoginPage} />
               ) : (
+                <>
                 <Stack.Screen options={{headerShown: false, animationEnabled: true}} 
                               name="HomePage" 
                               component={MenuDrawer} />
+                <Stack.Screen options={{animationEnabled: true, headerTitle: ''}} 
+                              name="ClassesFormPage" 
+                              component={ClassesFormPage}
+                              />                              
+                </>                              
               )
             }
           </Stack.Navigator>

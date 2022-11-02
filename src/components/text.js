@@ -1,11 +1,12 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
-import { fontBold, fontMedium, primary } from '../assets/colors';
+import { fontBold, fontMedium, fontRegular, primary } from '../assets/colors';
 
 const styles = StyleSheet.create({
     h1: {
         fontFamily: fontBold,
         fontSize: 24,
+        marginTop: 16,
         marginBottom: 16,
         color: primary
     },
@@ -15,6 +16,22 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         opacity: 0.5
     },
+    H3: {
+        fontFamily: fontRegular,
+        fontSize: 18,
+        marginTop: 16,
+        marginBottom: 16
+    },    
+    span: {
+        fontFamily: fontRegular,
+        fontSize: 16,
+        marginBottom: 16
+    },
+    body: {
+        fontFamily: fontRegular,
+        fontSize: 14,
+        marginBottom: 16
+    },
 });
 
 export const Title = ({ text, ...props }) => (
@@ -23,4 +40,16 @@ export const Title = ({ text, ...props }) => (
 
 export const Subtitle = ({ text, style={}, ...props }) => (
     <Text style={[styles.subtitle, style]} {...props}>{text}</Text>
+);
+
+export const H3 = ({ text, style={}, ...props }) => (
+    <Text style={[styles.H3, style]} {...props}>{text}</Text>
+);
+
+export const Span = ({ text, style={}, ...props }) => (
+    <Text style={[styles.span, style]} {...props}>{text}</Text>
+);
+
+export const Body = ({ text, style={}, ...props }) => (
+    <Text style={[styles.body, style]} {...props}>{text}</Text>
 );

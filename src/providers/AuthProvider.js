@@ -11,5 +11,3 @@ export function login(params){
 export function logout(){
   return post('/auth/logout')
 }
-
-axios

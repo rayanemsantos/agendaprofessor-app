@@ -23,7 +23,7 @@ export default function FrequenciaPage() {
         }
 
         getClasses();
-    }, [])
+    }, []);
 
     const showStudents = () => {
         // vai exibir os estudantes de school class subject

@@ -2,6 +2,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemL
 import { useAuthContext } from '../../contexts/AuthContext';
 import HomePage from '../../pages/home/HomePage';
 import FrequenciaPage from '../../pages/frequencia/FrequenciaPage'
+import ClassesPage from '../../pages/classes/Classes'
 
 const Drawer = createDrawerNavigator();
 
@@ -29,7 +30,7 @@ export default function MenuDrawer() {
         }}>
         <Drawer.Screen name="Início" component={HomePage} />
         <Drawer.Screen name="Frequencia" component={FrequenciaPage} />
-        {/* <Drawer.Screen name="SchoolClass" component={SchoolClassPage} /> */}
+        <Drawer.Screen name="Aulas" component={ClassesPage} />
       </Drawer.Navigator>
     );
 }
