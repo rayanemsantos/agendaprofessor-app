@@ -26,12 +26,15 @@ export async function get(resource){
 
 export async function post(resource, body){
   const token = await getToken();
+  if(token){
+    var authHeader = {'Authorization': `Bearer ${token}`};
+  }
   let url = `${URL_BASE}${resource}`
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
-      'Authorization': `Bearer ${token}`,
+      ...authHeader,
       'Content-type': 'application/json; charset=UTF-8'
     },
   }).then(async function (response) {

@@ -8,7 +8,7 @@ const AuthContextProvider = ({children, dispatch}) => {
           signIn: async token => {
             dispatch({ type: 'SIGN_IN', token: token });
           },
-          signOut: () => dispatch({ type: 'SIGN_OUT' }),
+          signOut: () => dispatch({ type: 'SIGN_OUT', token: null }),
         }),
         []
       );
