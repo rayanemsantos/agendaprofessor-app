@@ -3,6 +3,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import HomePage from '../../pages/home/HomePage';
 import FrequenciaPage from '../../pages/frequencia/FrequenciaPage'
 import ClassesPage from '../../pages/classes/Classes'
+import { logout } from '../../providers/AuthProvider';
 
 const Drawer = createDrawerNavigator();
 
