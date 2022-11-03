@@ -20,17 +20,57 @@ import { URL_BASE } from "../../providers/config";
 import { CustomButtonContained } from "../../components/customButton";
 
 import { getToken, getUserData } from "../../storage/Storage";
+import { AppInput } from "../../components/customInput";
+import HomePage from "../home/HomePage";
 
 export default function PerfilPage() {
   return (
     <ScrollView>
-        <Container>
-            <Title
-                text='Perfil Page'
+      <Container>
+        <ScrollView>
+          <View>
+            <Title text="Dados Pessoais" />
+          </View>
+
+          <View style={styles.formContainer}>
+            <AppInput label="Nome" name="name" placeholder="Insira seu nome" />
+
+            <AppInput
+              label="E-mail"
+              name="email"
+              placeholder="Insira seu e-mail"
             />
-        </Container>
+
+            <AppInput label="CPF" name="cpf" placeholder="Insira seu cpf" />
+
+            <AppInput
+              label="Escolaridade"
+              name="escolaridade"
+              placeholder="Insira sua escolaridade"
+            />
+
+            <AppInput
+              label="PIS/PASEP"
+              name="PIS/PASEP"
+              placeholder="Insira seu PIS/PASEP"
+            />
+
+            <AppInput
+              label="Cidade"
+              name="cidade"
+              placeholder="Insira sua cidade"
+            />
+            <CustomButtonContained
+            style={styles.formButton}
+              text="Alterar"
+              
+            />
+  
+          </View>
+        </ScrollView>
+      </Container>
     </ScrollView>
-);
+  );
 }
 const styles = StyleSheet.create({
   formTitleContainer: {
@@ -39,4 +79,8 @@ const styles = StyleSheet.create({
   formContainer: {
     marginTop: 20,
   },
+  formButton: {
+    marginBottom: 10,
+    marginTop: 10
+  }
 });
