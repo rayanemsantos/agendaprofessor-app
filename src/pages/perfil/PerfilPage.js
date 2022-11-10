@@ -23,11 +23,68 @@ import { getToken, getUserData } from "../../storage/Storage";
 import { AppInput } from "../../components/customInput";
 import ImagemPerfil from "../../assets/imagem-perfil.png";
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function PerfilPage() {
+export default function PerfilPage(props) {
+  const [schoolClassSubjectList, setSchoolClassSubjectList] = useState([]);
+  const [schoolClassSubjectSelected, setSchoolClassSubjectSelected] =
+    useState("");
+  const [schoolClassSubject, setSchoolClassSubject] = useState("");
 
-  
+  useEffect(() => {
+    const getClasses = async () => {
+      const userToken = await getToken();
+      const userData = await getUserData();
+      console.log(`Bearer ${JSON.parse(userToken)}`);
+
+      const response = await fetch(
+        "https://agenda-professor-api.herokuapp.com/api/school_class_subject",
+        {
+          method: "GET",
+          headers: new Headers({
+            Authorization: `Bearer ${JSON.parse(userToken)}`,
+          }),
+        }
+      ).then(function (response) {
+        return response.json();
+      });
+
+      const { id: teacherId } = JSON.parse(userData);
+
+      const filtered = response.filter((item) => item.teacher == teacherId);
+      setSchoolClassSubject(filtered);
+
+      const listSelect = filtered.map((item) => ({
+        key: item.id,
+        value:
+          item.school_class.serie +
+          " " +
+          item.school_class.identification +
+          " | " +
+          item.subject +
+          " | " +
+          item.school_class.shift,
+      }));
+
+      setSchoolClassSubjectList(listSelect);
+    };
+
+    getClasses();
+  }, []);
+
+  const showStudents = () => {
+    // vai exibir os estudantes de school class subject
+    // const [ students_subject ] = schoolClassSubjectList[schoolClassSubject]
+    const obj = schoolClassSubject.filter(
+      (item) => item.id == schoolClassSubjectSelected
+    );
+
+    if (obj.length) {
+      // const [students_subject] = obj[0]
+      console.log(obj[0].students_subject);
+    }
+  };
+
   return (
     <ScrollView>
       <Container>
@@ -38,8 +95,16 @@ export default function PerfilPage() {
 
           <View>
             <Image source={ImagemPerfil} style={styles.formImage} />
-            <Icon name="edit" size={30} style={styles.formIcon}  />
+            <Icon name="edit" size={30} style={styles.formIcon} />
           </View>
+
+          {/* <View style={styles.formTitleContainer}>
+            <Subtitle style={styles.formTitleConta} text="Turma" />
+            <SelectList
+              setSelected={setSchoolClassSubjectSelected}
+              data={schoolClassSubjectList}
+            />
+          </View> */}
 
           <View style={styles.formContainer}>
             <AppInput
@@ -107,11 +172,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 5,
     borderRadius: 20,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   formIcon: {
     alignSelf: "center",
     marginBottom: 10,
-    color: "#30009C"
-  }
+    color: "#30009C",
+  },
 });
