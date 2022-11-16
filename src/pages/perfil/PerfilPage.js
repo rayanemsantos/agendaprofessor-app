@@ -25,66 +25,16 @@ import ImagemPerfil from "../../assets/imagem-perfil.png";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function PerfilPage(props) {
-  const [schoolClassSubjectList, setSchoolClassSubjectList] = useState([]);
-  const [schoolClassSubjectSelected, setSchoolClassSubjectSelected] =
-    useState("");
-  const [schoolClassSubject, setSchoolClassSubject] = useState("");
+export default function PerfilPage() {
 
-  useEffect(() => {
-    const getClasses = async () => {
-      const userToken = await getToken();
-      const userData = await getUserData();
-      console.log(`Bearer ${JSON.parse(userToken)}`);
+  const [name, onChangeName] = React.useState("CAMILA DE OLIVEIRA MEDEIROS");
+  const [email, onChangeEmail] = React.useState("camifet@email.com.br");
 
-      const response = await fetch(
-        "https://agenda-professor-api.herokuapp.com/api/school_class_subject",
-        {
-          method: "GET",
-          headers: new Headers({
-            Authorization: `Bearer ${JSON.parse(userToken)}`,
-          }),
-        }
-      ).then(function (response) {
-        return response.json();
-      });
-
-      const { id: teacherId } = JSON.parse(userData);
-
-      const filtered = response.filter((item) => item.teacher == teacherId);
-      setSchoolClassSubject(filtered);
-
-      const listSelect = filtered.map((item) => ({
-        key: item.id,
-        value:
-          item.school_class.serie +
-          " " +
-          item.school_class.identification +
-          " | " +
-          item.subject +
-          " | " +
-          item.school_class.shift,
-      }));
-
-      setSchoolClassSubjectList(listSelect);
-    };
-
-    getClasses();
-  }, []);
-
-  const showStudents = () => {
-    // vai exibir os estudantes de school class subject
-    // const [ students_subject ] = schoolClassSubjectList[schoolClassSubject]
-    const obj = schoolClassSubject.filter(
-      (item) => item.id == schoolClassSubjectSelected
-    );
-
-    if (obj.length) {
-      // const [students_subject] = obj[0]
-      console.log(obj[0].students_subject);
-    }
-  };
-
+  const [cpf, onChangeCpf] = React.useState("022.242.292-00");
+  const [escolaridade, onChangeEscolaridade] = React.useState("ESPECIALISTA");
+  const [pisPasep, onChangePisPasep] = React.useState("156224678");
+  const [cidade, onChangeCidade] = React.useState("Fortaleza, Ceará");
+ 
   return (
     <ScrollView>
       <Container>
@@ -93,30 +43,19 @@ export default function PerfilPage(props) {
             <Title text="Dados Pessoais" />
           </View>
 
-          <View>
-            <Image source={ImagemPerfil} style={styles.formImage} />
-            <Icon name="edit" size={30} style={styles.formIcon} />
-          </View>
-
-          {/* <View style={styles.formTitleContainer}>
-            <Subtitle style={styles.formTitleConta} text="Turma" />
-            <SelectList
-              setSelected={setSchoolClassSubjectSelected}
-              data={schoolClassSubjectList}
-            />
-          </View> */}
-
           <View style={styles.formContainer}>
             <AppInput
               label="Nome"
               name="name"
-              value="CAMILA DE OLIVEIRA MEDEIROS"
+              onChangeText={onChangeName}
+              value={name}
               placeholder="Insira seu nome"
             />
 
             <AppInput
               label="E-mail"
-              value="camifet@email.com.br"
+              onChangeText={onChangeEmail}
+              value={email}
               name="email"
               placeholder="Insira seu e-mail"
             />
@@ -124,28 +63,32 @@ export default function PerfilPage(props) {
             <AppInput
               label="CPF"
               name="cpf"
-              value="022.242.292-00"
+              onChangeText={onChangeCpf}
+              value={cpf}
               placeholder="Insira seu cpf"
             />
 
             <AppInput
               label="Escolaridade"
               name="escolaridade"
-              value="ESPECIALISTA"
+              onChangeText={onChangeEscolaridade}
+              value={escolaridade}
               placeholder="Insira sua escolaridade"
             />
 
             <AppInput
               label="PIS/PASEP"
               name="PIS/PASEP"
-              value="156224678"
+              onChangeText={onChangePisPasep}
+              value={pisPasep}
               placeholder="Insira seu PIS/PASEP"
             />
 
             <AppInput
               label="Cidade"
               name="cidade"
-              value="Fortaleza, Ceará"
+              onChangeText={onChangeCidade}
+              value={cidade}
               placeholder="Insira sua cidade"
             />
             <CustomButtonContained style={styles.formButton} text="Alterar" />
