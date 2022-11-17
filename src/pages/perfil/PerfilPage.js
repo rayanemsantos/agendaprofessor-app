@@ -27,13 +27,15 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function PerfilPage() {
 
-  const [name, onChangeName] = React.useState("CAMILA DE OLIVEIRA MEDEIROS");
+  const [nome, onChangeNome] = React.useState("CAMILA DE OLIVEIRA MEDEIROS");
   const [email, onChangeEmail] = React.useState("camifet@email.com.br");
-
   const [cpf, onChangeCpf] = React.useState("022.242.292-00");
   const [escolaridade, onChangeEscolaridade] = React.useState("ESPECIALISTA");
   const [pisPasep, onChangePisPasep] = React.useState("156224678");
   const [cidade, onChangeCidade] = React.useState("Fortaleza, Ceará");
+
+
+  function alterarDadosPerfil() {}
  
   return (
     <ScrollView>
@@ -47,8 +49,8 @@ export default function PerfilPage() {
             <AppInput
               label="Nome"
               name="name"
-              onChangeText={onChangeName}
-              value={name}
+              onChangeText={onChangeNome}
+              value={nome}
               placeholder="Insira seu nome"
             />
 
@@ -91,7 +93,12 @@ export default function PerfilPage() {
               value={cidade}
               placeholder="Insira sua cidade"
             />
-            <CustomButtonContained style={styles.formButton} text="Alterar" />
+            <CustomButtonContained 
+            style={styles.formButton} 
+            onPress={alterarDadosPerfil}
+            disabled={nome === '' || email === '' || cpf === '' || escolaridade === ''}
+            text="Alterar" 
+            />
           </View>
         </ScrollView>
       </Container>
