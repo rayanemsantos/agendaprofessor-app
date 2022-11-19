@@ -12,3 +12,7 @@ export async function fetchClassSubjectsHistory(params){
 export async function newClassSubjectHistory(data){
   return post('/class_subject_history/', data);
 }
+
+export async function newClassSubjectHistoryPresence(data){
+  return post('/class_subject_history_presence/', data);
+}

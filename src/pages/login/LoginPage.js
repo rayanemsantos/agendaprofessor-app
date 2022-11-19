@@ -36,7 +36,7 @@ export default function LoginPage(props) {
     function doLogin() {
         setLoading(true);
         login(form).then((response) => {
-            console.log(response)
+            console.log(JSON.stringify(response,null,'\t'))
             let token_access = response['access'];
             let data =  {...response.data};
             
