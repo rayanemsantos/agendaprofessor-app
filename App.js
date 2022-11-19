@@ -13,6 +13,7 @@ import MenuDrawer from './src/components/menu-drawer/MenuDrawer';
 import ClassesFormPage from './src/pages/classes/ClassesForm';
 import LoginPage from './src/pages/login/LoginPage';
 import FrequenciaUpdatePage from './src/pages/frequencia/FrequenciaUpdatePage';
+import HomePage from './src/pages/home/HomePage';
 
 const bold = require('./src/assets/fonts/Montserrat-Bold.ttf');
 const medium = require('./src/assets/fonts/Montserrat-Medium.ttf');
