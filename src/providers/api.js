@@ -40,7 +40,8 @@ export async function post(resource, body){
   }).then(async function (response) {
     let resData = await response.json();
     // check for error response
-    console.log(response.ok)
+    console.log("Api status: " + response.ok)
+    console.log("")
     if (!response.ok) {
       return Promise.reject(resData);
     }    
