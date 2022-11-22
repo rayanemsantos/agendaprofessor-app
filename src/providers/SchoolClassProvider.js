@@ -12,3 +12,7 @@ export async function fetchClassSubjectsHistory(params){
 export async function newClassSubjectHistory(data){
   return post('/class_subject_history/', data);
 }
+// eventos
+export async function fetchEvents(){
+  return get('/calendar_event/')
+}
