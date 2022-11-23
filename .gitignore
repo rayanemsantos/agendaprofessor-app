@@ -11,6 +11,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+_update-notifier-last-checked
 
 # macOS
 .DS_Store

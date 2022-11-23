@@ -1,61 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Container from "../../components/container";
-import { Subtitle } from "../../components/text";
-import SelectList from 'react-native-dropdown-select-list'
-import { StyleSheet, View, Text, ScrollView, Button, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { fetchSchoolClassSubjects } from '../../providers/SchoolClassProvider';
+import { StyleSheet, View, ScrollView,  Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { CustomButtonContained } from '../../components/customButton';
-import { Title } from "../../components/text";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { Subtitle, Title, H3 } from "../../components/text";
+import SchoolClassSelect from '../school-class/components/SchoolClassSelect';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 
 export default function FrequenciaPage(props) {
-    const [schoolClassSubjectList, setSchoolClassSubjectList] = useState([]);
     const [schoolClassSubjectSelected, setSchoolClassSubjectSelected] = useState('');
-    const [schoolClassSubject, setSchoolClassSubject] = useState('');
-    const [isPickerShow, setIsPickerShow] = useState(false);
-    const [date, setDate] = useState(new Date(Date.now()));
-
-    const showPicker = () => {
-        setIsPickerShow(true);
-    };
+    const [date, setDate] = useState(null);
     
     const onChange = (event, value) => {
-    setDate(value);
-    if (Platform.OS === 'android') {
-      setIsPickerShow(false);
-    }
+        setDate(value);
     };
 
-    useEffect(() => {
-        const getClasses = async () => {
-            try {
-                const response = await fetchSchoolClassSubjects();
-                setSchoolClassSubject(response);
-                let listSelect = response.map(item => ({ key: item.id, value: item.school_class.serie + " " + item.school_class.identification + " | " + item.subject + " | " + item.school_class.shift }))
-                setSchoolClassSubjectList(listSelect);
-            } catch (error) {
-                console.log('err', error)
-            }
-        }
-
-        getClasses();
-    }, []);
-
     const showStudents = () => {
-        // vai exibir os estudantes de school class subject 
-        // const [ students_subject ] = schoolClassSubjectList[schoolClassSubject]
-        const obj = schoolClassSubject.filter(item => item.id == schoolClassSubjectSelected)
-
-        if (obj.length) {
-            const [list] = obj
-            const {students_subject} = list
-            if (students_subject.length > 0) {
-                const { class_subject } = students_subject[0]
-                props.navigation.navigate('Lançar Frequencia', { classSubjectId: class_subject, listStudents: students_subject, date })
-            }
-        }
-    }
+        console.log(schoolClassSubjectSelected.students_subject)
+        props.navigation.navigate('Lançar Frequencia', { 
+            classSubjectId: schoolClassSubjectSelected.id, 
+            listStudents: schoolClassSubjectSelected.students_subject, 
+            date 
+        })
+    };
 
     return (
         <Container>
@@ -63,29 +30,22 @@ export default function FrequenciaPage(props) {
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} keyboardVerticalOffset={-550}>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <Container>
+                            <H3 text='Selecione a turma'/>
+                            <SchoolClassSelect callbackSelect={setSchoolClassSubjectSelected}/>
+
+                            <H3 text='Selecione a data'/>
                             <View style={styles.formTitleContainer}>
-                                <Title text='Disciplina'/>
-                                <SelectList setSelected={setSchoolClassSubjectSelected} data={schoolClassSubjectList} />
-                            </View>
-                            
-                            <View style={styles.formTitleContainer}>
-                                {/* Display the selected date */}
-                                <View style={styles.pickedDateContainer}>
-                                <Text onPress={showPicker} style={styles.pickedDate}>{date.toUTCString() }</Text>
-                            </View>
-                                {/* The date picker */}
-                                {isPickerShow && (
-                                    <DateTimePicker
-                                    value={date}
+                                <RNDateTimePicker
+                                    value={date || new Date()}
                                     dateFormat={'DD/MM/YYYY'}
-                                    mode={'date'}
-                                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                                    mode='date'
+                                    display='inline'
                                     is24Hour={true}
                                     onChange={onChange}
                                     style={styles.datePicker}
-                                />)}
+                                    maximumDate={new Date()}
+                                />
                             </View>
-
                             <View style={styles.formContainer}>
                                 <CustomButtonContained
                                     text='Avançar'
@@ -125,10 +85,13 @@ const styles = StyleSheet.create({
       },
       // This only works on iOS
       datePicker: {
-        width: 320,
+        width: '100%',
         height: 260,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-start',
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: 'rgba(0,0,0,0.5)'
       },
     });

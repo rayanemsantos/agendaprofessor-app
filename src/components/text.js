@@ -16,6 +16,18 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         opacity: 0.5
     },
+    H5: {
+        fontFamily: fontRegular,
+        fontSize: 14,
+        marginTop: 16,
+        marginBottom: 16
+    },      
+    H4: {
+        fontFamily: fontRegular,
+        fontSize: 16,
+        marginTop: 16,
+        marginBottom: 16
+    },     
     H3: {
         fontFamily: fontRegular,
         fontSize: 18,
@@ -34,8 +46,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export const Title = ({ text, ...props }) => (
-    <Text style={styles.h1} {...props}>{text}</Text>
+export const Title = ({ text, style={}, ...props }) => (
+    <Text style={[styles.h1, style]} {...props}>{text}</Text>
 );
 
 export const Subtitle = ({ text, style={}, ...props }) => (
@@ -44,6 +56,12 @@ export const Subtitle = ({ text, style={}, ...props }) => (
 
 export const H3 = ({ text, style={}, ...props }) => (
     <Text style={[styles.H3, style]} {...props}>{text}</Text>
+);
+export const H4 = ({ text, style={}, ...props }) => (
+    <Text style={[styles.H4, style]} {...props}>{text}</Text>
+);
+export const H5 = ({ text, style={}, ...props }) => (
+    <Text style={[styles.H5, style]} {...props}>{text}</Text>
 );
 
 export const Span = ({ text, style={}, ...props }) => (

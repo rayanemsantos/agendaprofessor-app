@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { shadow, fontBold } from '../assets/colors';
-
+import { Icon } from 'react-native-elements';
 
 const styles = StyleSheet.create({
     formInput: {
@@ -51,21 +51,29 @@ const styles = StyleSheet.create({
     },
     searchIcon: {
         padding: 10,
-        color:'#343434', 
+        color:'#000', 
         opacity:0.6
     },
     formInputSearch:{
         ...shadow,
-        height:44,
-        backgroundColor: '#fff',
-        color: '#000',
-        marginBottom: 12,
+        // height:44,
+        // backgroundColor: '#fff',
+        // color: '#000',
+        // marginBottom: 12,
         textAlignVertical:'center',     
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-start',   
-        paddingHorizontal: 16,
-        borderRadius: 24,
+        // justifyContent: 'flex-start',   
+        // paddingHorizontal: 16,
+        // borderRadius: 24,
+        fontFamily: fontBold,
+        backgroundColor: '#F8F8F8',
+        color: '#000',
+        paddingLeft: 16,
+        borderRadius: 8,
+        marginBottom: 16,
+        textAlignVertical:'center',
+        height: 55,        
     }
 });
 
@@ -117,4 +125,16 @@ export const AppInputSelect = ({ ...props }) => (
         />         */}
     </TouchableOpacity>
     </>
+);
+
+export const IconInput = ({ value='', ...props }) => (
+    <TouchableOpacity {...props} style={styles.formInputSearch}>
+        <Icon
+            name='calendar'
+            type='font-awesome'
+            size={18}
+            style={styles.searchIcon}
+        />
+        <Text style={{color:'#000', opacity:0.7}}>{value ? value : 'Selecionar data'}</Text>
+    </TouchableOpacity>
 );
