@@ -22,3 +22,7 @@ export async function newClassSubjectHistoryPresence(data){
 export async function fetchEvents(){
   return get('/calendar_event/')
 }
+
+export async function changePassword(data){
+  return post('/auth/change_password', data);
+}

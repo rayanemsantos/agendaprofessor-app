@@ -16,12 +16,11 @@ export default function HomePage() {
 
     function handleEvents(){
         fetchEvents().then((res) => {
-            console.warn(res)
             setEvents(res.map((item) => {
                 let date = parseDate(item.date_schedule); 
                 let dateFormatted = formatDate(item.date_schedule, "DD"); 
-                console.log(item.date_schedule, date, dateFormatted)
                 return {
+                    id: item.id,
                     title: item.title,
                     description: item.description,
                     day: dateFormatted,
@@ -59,7 +58,7 @@ export default function HomePage() {
                 <FlatList
                     data={events}
                     renderItem={renderItem}
-                    keyExtractor={item => item.title}
+                    keyExtractor={item => item.id}
                     ListEmptyComponent={
                         <View>
                             <Subtitle text='Nenhuma evento a ser listado.'/>

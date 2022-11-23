@@ -30,6 +30,7 @@ export async function post(resource, body){
     var authHeader = {'Authorization': `Bearer ${token}`};
   }
   let url = `${URL_BASE}${resource}`
+  console.log(url)
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(body),
