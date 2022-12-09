@@ -11,9 +11,11 @@ import { AuthContextProvider } from "./src/contexts/AuthContext";
 import { cleanData, getToken } from "./src/storage/Storage";
 import MenuDrawer from './src/components/menu-drawer/MenuDrawer';
 import ClassesFormPage from './src/pages/classes/ClassesForm';
+import ClassesHistoryPage from './src/pages/classes/ClassesHistory';
 import LoginPage from './src/pages/login/LoginPage';
 import FrequenciaUpdatePage from './src/pages/frequencia/FrequenciaUpdatePage';
-import HomePage from './src/pages/home/HomePage';
+import GradeUpdatePage from './src/pages/grades/GradeUpdate';
+import StudentListPage from './src/pages/student/StudentListPage';
 
 const bold = require('./src/assets/fonts/Montserrat-Bold.ttf');
 const medium = require('./src/assets/fonts/Montserrat-Medium.ttf');
@@ -107,14 +109,32 @@ function App() {
                 <Stack.Screen options={{headerShown: false, animationEnabled: true}} 
                               name="HomePage" 
                               component={MenuDrawer} />
-                <Stack.Screen options={{animationEnabled: true, headerTitle: ''}} 
+                <Stack.Screen options={{animationEnabled: true, headerTitle: 'Registrar nova aula'}} 
                               name="ClassesFormPage" 
                               component={ClassesFormPage}
-                              />                              
+                              /> 
+                <Stack.Screen options={{animationEnabled: true, headerTitle: 'Histórico de aulas'}} 
+                              name="ClassesHistoryPage"
+                              component={ClassesHistoryPage}
+                              />                                                            
+                <Stack.Screen 
+                  options={{animationEnabled: true, headerTitle: 'Lançar Frequência'}}  
+                  name="FrequenciaUpdatePage" 
+                  component={FrequenciaUpdatePage} 
+                />    
+                <Stack.Screen
+                  options={{animationEnabled: true, headerTitle: 'Lançar notas'}}  
+                  name="GradeUpdatePage" 
+                  component={GradeUpdatePage} 
+                />             
+                <Stack.Screen
+                  options={{animationEnabled: true, headerTitle: 'Alunos da turma'}}  
+                  name="StudentListPage" 
+                  component={StudentListPage} 
+                />                              
                 </>                              
               )
             }
-            <Stack.Screen name="Lançar Frequencia" component={FrequenciaUpdatePage} />
           </Stack.Navigator>
         </AuthContextProvider>
       </NavigationContainer>

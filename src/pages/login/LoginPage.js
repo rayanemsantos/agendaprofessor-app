@@ -27,7 +27,7 @@ import { alert } from '../../utils/alertUtils';
 
 export default function LoginPage(props) {
     const [form, setForm] = useState({
-        username: '2024708',   //REMOVER DEPOIS
+        username: '29232022',   //REMOVER DEPOIS
         password:  '1234'      //REMOVER DEPOIS
     });
     const [loading, setLoading] = useState(false);
@@ -36,7 +36,6 @@ export default function LoginPage(props) {
     function doLogin() {
         setLoading(true);
         login(form).then((response) => {
-            console.log(JSON.stringify(response,null,'\t'))
             let token_access = response['access'];
             let data =  {...response.data};
             
@@ -49,7 +48,7 @@ export default function LoginPage(props) {
                 title: "Ops! Houve um problema ao efetuar login", 
                 subtitle: "Se o problema persistir, entre em contato com suporte."
             })
-            console.warn('err login', err.response)
+            console.warn('err login', err)
         }).finally(() => {
             setLoading(false);
         })

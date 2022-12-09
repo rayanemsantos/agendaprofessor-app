@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import { ScrollView, FlatList, View, StyleSheet } from "react-native";
 import Container from "../../components/container";
-import { Title, Subtitle, Body, H3, H4, H5 } from "../../components/text";
+import { Title, Subtitle, Body, H3, H4, H5, Span } from "../../components/text";
 import { fetchEvents } from '../../providers/SchoolClassProvider';
-
-// import Timeline from 'react-native-timeline-flatlist'
+import { getUserData } from "../../storage/Storage";
 import dateUtil from '../../utils/dateUtil';
 
 
 export default function HomePage() {
     const days = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
     const [events, setEvents] = useState([]);
+    const [name, setName] = useState('');
+    const [formacao, setFormacao] = useState('');
     const formatDate = dateUtil.formatDate;
     const parseDate = dateUtil.parseDate;
 
@@ -19,12 +20,13 @@ export default function HomePage() {
             setEvents(res.map((item) => {
                 let date = parseDate(item.date_schedule); 
                 let dateFormatted = formatDate(item.date_schedule, "DD"); 
+                console.log(date.getDay())
                 return {
                     id: item.id,
                     title: item.title,
                     description: item.description,
                     day: dateFormatted,
-                    dayWeek: days[date.getDay()]
+                    dayWeek: days[date.getDay() - 1]
                 }
             }));
         }).catch((err) => console.log(err))
@@ -32,6 +34,12 @@ export default function HomePage() {
 
     useEffect(() => {
         handleEvents();
+        getUserData().then((data) => {
+            let json = JSON.parse(data)
+            setName(json.first_name);
+            setFormacao(json.formacao);
+        })
+
     }, []);
 
     const renderItem = ({ item }) => (
@@ -41,7 +49,8 @@ export default function HomePage() {
                 <H5 style={{marginBottom:0, marginTop: 0}} text={item.dayWeek}/>
             </View>
             <View style={{maxWidth: '70%', marginLeft: 16 }}>
-                <Body text={item.title}/>
+                <H4 text={item.title}/>
+                <Body text={item.description}/>
             </View>
         </View>
     );
@@ -50,8 +59,11 @@ export default function HomePage() {
         <ScrollView>
             <Container>
                 <Title
-                    text='Bem vindo!'
+                    text={`Bem vindo, ${name}! `}
                 />
+                {/* <Subtitle
+                    text={formacao}
+                />     */}
                 <Subtitle
                     text='Calendário letivo'
                 />                

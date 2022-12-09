@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { shadow, fontBold } from '../assets/colors';
 import { Icon } from 'react-native-elements';
+import MaskInput, {createNumberMask} from 'react-native-mask-input';
+import CurrencyInput from 'react-native-currency-input';
 
 const styles = StyleSheet.create({
     formInput: {
@@ -77,10 +79,119 @@ const styles = StyleSheet.create({
     }
 });
 
-export const AppInput = ({ ...props }) => (
+const MASKS = {
+    phone: [
+      '(',
+      /\d/,
+      /\d/,
+      ')',
+      ' ',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+    ],
+    cpf: [
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ],
+    cnpj: [
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '.',
+      /\d/,
+      /\d/,
+      /\d/,
+      '/',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+    ],
+    kg: [kgMask, 'kg'],
+  };
+  
+  const kgMask = createNumberMask({
+    separator: ',',
+    precision: 1,
+  });
+
+  export const MaskInputText = ({mask = 'phone', ...props}) => (
+    <MaskInput {...props} mask={MASKS[mask]} />
+  );
+
+  function MaskInputCurrency({value, onChangeText, suffix, ...props}) {
+    const [currentValue, setValue] = React.useState(value);
+  
+    function handleChange(targetValue) {
+      setValue(targetValue);
+      onChangeText(targetValue);
+    }
+  
+    useEffect(() => {
+      setValue(value);
+    }, [value]);
+  
+    return (
+      <CurrencyInput
+        value={currentValue}
+        onChangeValue={handleChange}
+        suffix={suffix}
+        delimiter="."
+        separator="."
+        precision={1}
+        minValue={0}
+        maxValue={10}
+        onChangeText={(formattedValue) => {
+          console.log(formattedValue); // R$ +2.310,46
+        }}
+        {...props}
+      />
+    );
+  }
+
+export const AppInput = ({ mask = false, ...props }) => (
     <View style={{ flex: 1}}>
         {props.label && <Text style={styles.formInputLabel}>{props.label}</Text>}
-        <TextInput style={[{backgroundColor:props.backgroundColor}, styles.formInput]} {...props} />
+
+        {
+            mask ? (
+            <MaskInputCurrency
+                style={[{backgroundColor:props.backgroundColor}, styles.formInput]}
+                onChangeText={(masked) => {
+                    props.onChangeText(masked);
+                }}        
+                {...props}
+            />             
+            ) : (
+                <TextInput style={[{backgroundColor:props.backgroundColor}, styles.formInput]} {...props} />
+            )
+        }
     </View>
 );
 

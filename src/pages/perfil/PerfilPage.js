@@ -42,11 +42,13 @@ export default function PerfilPage() {
     changePassword({
       password: newPassword,
       current_passord: currentPassword
-    }).then(() => {
+    }).then((res) => {
       alert({ 
         title: "Senha alterada com sucesso.", 
         textCancel: "Ok"
       })      
+      setNewPassword('');
+      setCurrentPassword('');
     }).catch((err) => {
       if(err.error){
         alert({ 

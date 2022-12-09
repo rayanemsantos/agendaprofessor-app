@@ -9,18 +9,18 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 export default function FrequenciaPage(props) {
     const [schoolClassSubjectSelected, setSchoolClassSubjectSelected] = useState('');
-    const [date, setDate] = useState(null);
+    const [date, setDate] = useState(new Date());
     
     const onChange = (event, value) => {
         setDate(value);
     };
 
     const showStudents = () => {
-        console.log(schoolClassSubjectSelected.students_subject)
-        props.navigation.navigate('Lançar Frequencia', { 
+        console.log(date)
+        props.navigation.navigate('FrequenciaUpdatePage', { 
             classSubjectId: schoolClassSubjectSelected.id, 
             listStudents: schoolClassSubjectSelected.students_subject, 
-            date 
+            date: date
         })
     };
 
@@ -29,31 +29,31 @@ export default function FrequenciaPage(props) {
             <ScrollView>
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} keyboardVerticalOffset={-550}>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <Container>
-                            <H3 text='Selecione a turma'/>
-                            <SchoolClassSelect callbackSelect={setSchoolClassSubjectSelected}/>
+                        <>
+                        <H3 text='Selecione a turma'/>
+                        <SchoolClassSelect callbackSelect={setSchoolClassSubjectSelected}/>
 
-                            <H3 text='Selecione a data'/>
-                            <View style={styles.formTitleContainer}>
-                                <RNDateTimePicker
-                                    value={date || new Date()}
-                                    dateFormat={'DD/MM/YYYY'}
-                                    mode='date'
-                                    display='inline'
-                                    is24Hour={true}
-                                    onChange={onChange}
-                                    style={styles.datePicker}
-                                    maximumDate={new Date()}
-                                />
-                            </View>
-                            <View style={styles.formContainer}>
-                                <CustomButtonContained
-                                    text='Avançar'
-                                    onPress={showStudents}
-                                    disabled={schoolClassSubjectSelected === ''}
-                                />
-                            </View>
-                        </Container>
+                        <H3 text='Selecione a data'/>
+                        <View style={styles.formTitleContainer}>
+                            <RNDateTimePicker
+                                value={date}
+                                dateFormat={'DD/MM/YYYY'}
+                                mode='date'
+                                display='inline'
+                                is24Hour={true}
+                                onChange={onChange}
+                                style={styles.datePicker}
+                                maximumDate={new Date()}
+                            />
+                        </View>
+                        <View style={styles.formContainer}>
+                            <CustomButtonContained
+                                text='Avançar'
+                                onPress={showStudents}
+                                disabled={schoolClassSubjectSelected === ''}
+                            />
+                        </View>
+                        </>
                     </TouchableWithoutFeedback>
                 </KeyboardAvoidingView>
             </ScrollView>
@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         marginTop: 20
-    },container: {
+    },
+    container: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

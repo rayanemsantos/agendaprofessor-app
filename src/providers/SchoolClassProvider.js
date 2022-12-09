@@ -18,6 +18,13 @@ export async function newClassSubjectHistoryPresence(data){
   return post('/class_subject_history_presence/', data);
 }
 
+export async function getClassSubjectHistoryPresence(params){
+  return get('/class_subject_history_presence/?' + new URLSearchParams(params));
+}
+
+export async function setGrades(data){
+  return post('/student_subject_average_grade/', data);
+}
 // eventos
 export async function fetchEvents(){
   return get('/calendar_event/')

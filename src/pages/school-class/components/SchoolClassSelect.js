@@ -26,8 +26,6 @@ export default function SchoolClassSelect(props) {
 
     function handleCallback(){
         let item = list.find((_item) => _item.id === selected)
-        console.log(list)
-        console.log(item)
         callbackSelect(item)
     };
 

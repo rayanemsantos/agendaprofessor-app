@@ -3,8 +3,10 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import HomePage from '../../pages/home/HomePage';
 import FrequenciaPage from '../../pages/frequencia/FrequenciaPage'
 import ClassesPage from '../../pages/classes/Classes'
-import { logout } from '../../providers/AuthProvider';
 import PerfilPage from '../../pages/perfil/PerfilPage';
+import GradesPage from '../../pages/grades/Grades';
+import SchoolClassListPage from '../../pages/school-class/SchoolClassListPage';
+import { logout } from '../../providers/AuthProvider';
 
 const Drawer = createDrawerNavigator();
 
@@ -32,8 +34,10 @@ export default function MenuDrawer() {
         }}>
         <Drawer.Screen name="Início" component={HomePage} />
         <Drawer.Screen name="Perfil" component={PerfilPage} />
+        <Drawer.Screen name="Turmas" component={SchoolClassListPage} />
         <Drawer.Screen name="Aulas" component={ClassesPage} />
-        <Drawer.Screen name="Frequencia" component={FrequenciaPage} />
+        <Drawer.Screen name="Frequência" component={FrequenciaPage} />
+        <Drawer.Screen name="Notas" component={GradesPage} />
       </Drawer.Navigator>
     );
 }

@@ -3,18 +3,21 @@ import { Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-nat
 import { shadow, primary, fontBold } from '../assets/colors';
 
 const styles = StyleSheet.create({
-    buttonOutlined:{
-        ...shadow,
-        marginTop:16,
+    buttonOutlined: (disabled) => ({
+        paddingLeft:16,
+        paddingRight:16,
         height: 44,
         display:'flex',
         justifyContent: 'center',
         alignItems:'center',
-        borderRadius: 24,
-        borderWidth:2,
-        borderColor:primary,
-        backgroundColor:'white'
-    },
+        borderRadius: 8,
+        backgroundColor:'white',
+        borderWidth: 2,
+        borderColor: primary,
+        color: primary,
+        opacity: disabled ? 0.5 : 1,
+        ...shadow,
+    }),
     buttonContained: (disabled) => ({
         paddingLeft:16,
         paddingRight:16,
@@ -35,12 +38,13 @@ const styles = StyleSheet.create({
     textPrimary: {
         color: primary, 
         fontSize: 14,
-        fontFamily: fontBold
+        fontFamily: fontBold,
+        textTransform: 'uppercase'
     },    
 });
 
 export const CustomButtonOutlined = ({ ...props }) => (
-    <TouchableOpacity {...props} style={[styles.buttonOutlined, {...props.style}]}>
+    <TouchableOpacity {...props} style={[styles.buttonOutlined(props.disabled), {...props.style}]}>
         <Text style={styles.textPrimary}>
             {props.text}
         </Text>

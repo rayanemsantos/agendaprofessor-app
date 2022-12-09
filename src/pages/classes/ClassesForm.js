@@ -16,10 +16,11 @@ import { alert } from '../../utils/alertUtils';
 
 export default function ClassesFormPage(props) {
     const { route, navigation } = props;
-    const { class_subject } = route.params;
+    const { class_subject, date } = route.params;
 
     const [form, setForm] = useState({
-        class_subject : class_subject,
+        class_subject: class_subject.id,
+        register_date: date.toISOString().split('T')[0],
         content: '',
         comment: ''
     });
@@ -51,7 +52,6 @@ export default function ClassesFormPage(props) {
     return (
         <Container>
             <ScrollView>
-                <Title text='Registrar aula'/>
                 <KeyboardAvoidingView
                     behavior={Platform.OS == "ios" ? "padding" : "height"}
                     keyboardVerticalOffset={-550}
